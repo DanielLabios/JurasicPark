@@ -163,11 +163,43 @@ namespace JurasicPark
                             enclosureNumber = tempEnclosureNumber,
                             iD = tempiD,
                         });
-
-
-
-
                         break;
+                    case "REMOVE":
+                        Console.WriteLine("Which Dinosaur do you want removed");
+                        var nameGiven = Console.ReadLine();
+                        var nameThatWasSearched = new List<Dinosaur>();
+                        nameThatWasSearched.AddRange(zooDinosaurs.Where(Dinosaur => Dinosaur.name == nameGiven));
+                        if (nameThatWasSearched == null)
+                        {
+                            Console.WriteLine($"The Listed Dinosaur {nameGiven} was not found.");
+                        }
+                        else if (nameThatWasSearched.Count() == 1)
+                        {
+                            zooDinosaurs.RemoveAt(zooDinosaurs.FindIndex(Dinosaur => Dinosaur.name.Contains(nameGiven)));
+                        }
+                        else if (nameThatWasSearched.Count() > 1)
+                        {
+                            Console.WriteLine($"There was more than one Dinosaurs named {nameGiven}. Which one are you looking for?");
+                            int counter = 1;
+                            var listOfChoices = new List<int>();
+                            foreach (Dinosaur dinosaur in nameThatWasSearched)
+                            {
+                                Console.WriteLine("{" + $"{counter}" + "}" + $"-----------ID: {dinosaur.iD}-----------Name: {dinosaur.name}---------");
+                                dinosaur.PrintDescription();
+                                Console.WriteLine();
+                                listOfChoices.Add(counter);
+                                counter++;
+                            }
+                            Console.Write("Choose Options:");
+                            foreach (int options in listOfChoices)
+                            {
+                                Console.Write($"     " + "{" + $"{options}" + "}");
+                            }
+                            var optionChosen = int.Parse(Console.ReadLine());
+                            zooDinosaurs.RemoveAt(zooDinosaurs.FindIndex(Dinosaur => Dinosaur.iD == nameThatWasSearched[optionChosen - 1].iD));
+                        }
+                        break;
+
 
                     case "SUMMARY":
                         int herbDinos = zooDinosaurs.Where(Dinosaurs => Dinosaurs.dietType == "Herbivorous").Count();
@@ -229,6 +261,7 @@ namespace JurasicPark
                 //    - print goodbye outside of while loop
 
                 //    - If typo, printtypoacknowledgement()
+
 
 
             }
