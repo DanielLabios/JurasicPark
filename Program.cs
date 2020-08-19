@@ -169,7 +169,7 @@ namespace JurasicPark
                         var nameGiven = Console.ReadLine();
                         var nameThatWasSearched = new List<Dinosaur>();
                         nameThatWasSearched.AddRange(zooDinosaurs.Where(Dinosaur => Dinosaur.name == nameGiven));
-                        if (nameThatWasSearched == null)
+                        if (nameThatWasSearched.Count() == 0)
                         {
                             Console.WriteLine($"The Listed Dinosaur {nameGiven} was not found.");
                         }
@@ -199,8 +199,48 @@ namespace JurasicPark
                             zooDinosaurs.RemoveAt(zooDinosaurs.FindIndex(Dinosaur => Dinosaur.iD == nameThatWasSearched[optionChosen - 1].iD));
                         }
                         break;
-
-
+                    case "TRANSFER":
+                        Console.WriteLine("Which Dinosaur do you want to Transfer?");
+                        var nameGiven2 = Console.ReadLine();
+                        var nameThatWasSearched2 = new List<Dinosaur>();
+                        nameThatWasSearched2.AddRange(zooDinosaurs.Where(Dinosaur => Dinosaur.name == nameGiven2));
+                        int iDOfNameGiven = 0;
+                        if (nameThatWasSearched2.Count() == 0)
+                        {
+                            Console.WriteLine($"The Listed Dinosaur {nameGiven2} was not found.");
+                        }
+                        else if (nameThatWasSearched2.Count() == 1)
+                        {
+                            iDOfNameGiven = zooDinosaurs.First(Dinosaur => Dinosaur.name == nameGiven2).iD;
+                        }
+                        else if (nameThatWasSearched2.Count() > 1)
+                        {
+                            Console.WriteLine($"There was more than one Dinosaurs named {nameGiven2}. Which one are you looking for?");
+                            int counter = 1;
+                            var listOfChoices = new List<int>();
+                            foreach (Dinosaur dinosaur in nameThatWasSearched2)
+                            {
+                                Console.WriteLine("{" + $"{counter}" + "}" + $"-----------ID: {dinosaur.iD}-----------Name: {dinosaur.name}---------");
+                                dinosaur.PrintDescription();
+                                Console.WriteLine();
+                                listOfChoices.Add(counter);
+                                counter++;
+                            }
+                            Console.Write("Choose Options:");
+                            foreach (int options in listOfChoices)
+                            {
+                                Console.Write($"     " + "{" + $"{options}" + "}");
+                            }
+                            var optionChosen2 = int.Parse(Console.ReadLine());
+                            iDOfNameGiven = zooDinosaurs.First(Dinosaur => Dinosaur.iD == nameThatWasSearched2[optionChosen2 - 1].iD).iD;
+                        }
+                        if (nameThatWasSearched2.Count() != 0)
+                        {
+                            Console.WriteLine("Which Enclosure are you transfering the Dinosaur into?");
+                            var enclosureTransfer = int.Parse(Console.ReadLine());
+                            zooDinosaurs.First(Dinosaur => Dinosaur.iD == iDOfNameGiven).enclosureNumber = enclosureTransfer;
+                        }
+                        break;
                     case "SUMMARY":
                         int herbDinos = zooDinosaurs.Where(Dinosaurs => Dinosaurs.dietType == "Herbivorous").Count();
                         int carnDinos = zooDinosaurs.Where(zooDinosaurs => zooDinosaurs.dietType == "Carnivorous").Count();
