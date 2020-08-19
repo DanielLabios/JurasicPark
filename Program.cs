@@ -114,16 +114,17 @@ namespace JurasicPark
                     //          - print (success!!)
                     case "ADD":
                         int tempiD = zooDinosaurs.Max(Dinosaurs => Dinosaurs.iD) + 1;
-                        Console.WriteLine("Adding new Dinosaur. His Unique ID will be {tempiD}.");
+                        Console.WriteLine($"Adding new Dinosaur. His Unique ID will be {tempiD}.");
 
                         Console.WriteLine("Please give the Dinosaurs Species' name?");
                         string tempName = Console.ReadLine();
 
                         var inputSwitch = false;
+                        string tempdietType = "unknown";
                         while (inputSwitch == false)
                         {
                             Console.WriteLine("Please give the Dinosaur's diet type?\r\nCarnivorous/Herbivorous or c/h");
-                            string tempdietType = Console.ReadLine().ToUpper();
+                            tempdietType = Console.ReadLine().ToUpper();
                             if (tempdietType != "C" && tempdietType != "H" && tempdietType != "CARNIVOROUS" && tempdietType != "HERBIVOROUS")
                             {
                                 Console.WriteLine("User Input was not recognized. Please Try Again.");
@@ -141,10 +142,31 @@ namespace JurasicPark
                             }
                         }
 
-                        /* Console.WriteLine("Please give the Dinosaur's weight in pounds? ");
-                         string tempweightRL = Console.ReadLine
-                         bool goodIntInput = Console.ReadLine().try
- */
+                        Console.WriteLine("Please give the Dinosaur's weight in pounds? ");
+                        //double good;
+                        //bool ggood = double.TryParse(Console.ReadLine(), out good);
+                        var tempweight = double.Parse(Console.ReadLine());
+
+
+                        Console.WriteLine("Please give the EnclosureNumber the Dinosaur will be housed?");
+                        var tempEnclosureNumber = int.Parse(Console.ReadLine());
+
+                        DateTime tempDateTime = DateTime.Now;
+
+                        Console.WriteLine($"{tempName} ID: {tempiD} has been successfully created!");
+                        zooDinosaurs.Add(new Dinosaur()
+                        {
+                            name = tempName,
+                            dietType = tempdietType,
+                            whenAcquired = DateTime.Now.AddMonths(-1),
+                            weight = tempweight,
+                            enclosureNumber = tempEnclosureNumber,
+                            iD = tempiD,
+                        });
+
+
+
+
                         break;
 
                     case "SUMMARY":
