@@ -39,6 +39,7 @@ namespace JurasicPark
     {
         static void Main(string[] args)
         {
+            Console.Clear();
 
             Console.WriteLine("Hello, welcome to Caveman's High Tech Dinosaur Tracker!");
             Console.WriteLine("Modern Solutions for Prehistoric Problems");
@@ -74,7 +75,7 @@ namespace JurasicPark
                 iD = 003,
             });
 
-
+            //  - When the Console application runs, the options can be executed by the user
             while (runTime == true)
             {
                 Console.WriteLine("--View-- Show all the Dinosaurs currently in Zoo and their current state.");
@@ -85,6 +86,7 @@ namespace JurasicPark
                 Console.WriteLine("--Quit-- Exit out of the CHTDT Management System");
 
                 string choice = Console.ReadLine().ToUpper();
+                Console.Clear();
                 if (choice != "VIEW" && choice != "ADD" && choice != "REMOVE" && choice != "TRANSFER" && choice != "SUMMARY" && choice != "QUIT")
                 {
                     choice = "FALSE";
@@ -97,7 +99,16 @@ namespace JurasicPark
                         foreach (Dinosaur Dino in dinosInOrder)
                         {
                             Dino.PrintDescription();
+                            //Console.WriteLine("\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
                         }
+                        break;
+
+                    case "SUMMARY":
+                        int herbDinos = zooDinosaurs.Where(Dinosaurs => Dinosaurs.dietType == "Herbivorous").Count();
+                        int carnDinos = zooDinosaurs.Where(zooDinosaurs => zooDinosaurs.dietType == "Carnivorous").Count();
+                        Console.WriteLine($"Currently, there are {herbDinos} Herbivores at the Zoo.");
+                        Console.WriteLine($"Also, There are {carnDinos} Carnivores at the Zoo.");
+
                         break;
 
                     case "QUIT":
@@ -110,7 +121,7 @@ namespace JurasicPark
                 }
 
 
-                //  - When the Console application runs, the options can be executed by the user
+
 
                 //    - VIEW - this command will show all the dinosaurs in a list<Dinosaur> (ZooDinosaurs) ordered by WhenAcquired
                 //       - 
